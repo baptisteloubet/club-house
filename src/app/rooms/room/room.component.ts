@@ -11,6 +11,14 @@ import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { take } from 'rxjs/operators';
 import { PresenceService } from 'src/app/services/presence.service';
 
+const randomNames = [
+  'Alfred',
+  'Tanguy',
+  'Baptiste',
+  'Julien',
+  'Melvin'
+]
+
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -18,7 +26,7 @@ import { PresenceService } from 'src/app/services/presence.service';
 })
 export class RoomComponent implements OnInit {
 
-  private roomId : string | null | undefined;
+  private roomId? : string | null;
   private client? : AgoraRTC.Client;
   private user : any;
   public room : Iroom | null | undefined;
@@ -50,7 +58,7 @@ export class RoomComponent implements OnInit {
         this.isHost = this.user.uid === this.room?.host;
         this.client?.setClientRole(this.isHost ? 'host' : 'audience');
         this.presenceService.setPresenceOnline({
-          displayName: "",
+          displayName: randomNames,
           key: this.user.uuid
         }, this.roomId).pipe(take(1)).subscribe();
       }

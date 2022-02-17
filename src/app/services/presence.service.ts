@@ -12,7 +12,7 @@ export class PresenceService {
     private db : AngularFireDatabase
   ) { }
 
-  public setPresenceOnline(newUser : any, roomId : string):Observable<any> {
+  public setPresenceOnline(newUser : any, roomId? : string | null):Observable<any> {
     return this.db.object('.info/connected').valueChanges()
       .pipe(tap(() => {
         const online = {
@@ -28,7 +28,7 @@ export class PresenceService {
     )
   }
 
-  public setPresenceOffline (onlineUser : any, roomId: string) : void {
+  public setPresenceOffline (onlineUser : any, roomId?: string | null) : void {
     this.db.object(`online/${roomId}/${onlineUser.key}`).remove();
   }
 }
