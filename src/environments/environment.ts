@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiKey: "AIzaSyAH2QRMqbvyRhx88DBuXxZobWaUQmgPCf0",
+  authDomain: "club-house-69100.firebaseapp.com",
+  databaseURL: "https://club-house-69100-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "club-house-69100",
+  storageBucket: "club-house-69100.appspot.com",
+  messagingSenderId: "54293344322",
+  appId: "1:54293344322:web:cd9aa6b935f81ec1fefddb"
 };
 
 /*
