@@ -27,10 +27,18 @@ const randomNames = [
 export class RoomComponent implements OnInit {
 
   private roomId? : string | null;
-  private client? : AgoraRTC.Client;
+  private client! : AgoraRTC.Client;
   private user : any;
   public room : Iroom | null | undefined;
   public isHost = false;
+  private streamOptions = {
+    audio : true,
+    video : false,
+    streamID : "",
+    screen : false
+  }
+  private localStreams = [];
+  private localStream = AgoraRTC.createStream;
 
   constructor(
     private activatedRoute : ActivatedRoute,
@@ -58,7 +66,7 @@ export class RoomComponent implements OnInit {
         this.isHost = this.user.uid === this.room?.host;
         this.client?.setClientRole(this.isHost ? 'host' : 'audience');
         this.presenceService.setPresenceOnline({
-          displayName: randomNames,
+          displayName: randomNames[Math.floor(Math.random()*randomNames.length)],
           key: this.user.uuid
         }, this.roomId).pipe(take(1)).subscribe();
       }
@@ -75,6 +83,22 @@ export class RoomComponent implements OnInit {
 
   public leaveRoom(): void {
 
+  }
+
+  public joinStream() : void {
+    this.streamOptions.streamID = this.roomId == undefined ? "" :  this.roomId;
+    this.client.join(
+      'user_token',
+      'demo',
+      null,
+      undefined,
+      (uid)=>{
+        this.localStreams.push(uid);
+        if(this.isHost){
+          //this.createLocalStream();
+        }
+      },
+    );
   }
 
 }
