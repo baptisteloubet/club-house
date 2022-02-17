@@ -9,6 +9,7 @@ import { AngularFireDatabase} from  '@angular/fire/compat/database';
 import { Iroom } from '../rooms.component';
 import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { take } from 'rxjs/operators';
+import { PresenceService } from 'src/app/services/presence.service';
 
 @Component({
   selector: 'app-room',
@@ -17,7 +18,7 @@ import { take } from 'rxjs/operators';
 })
 export class RoomComponent implements OnInit {
 
-  private roomId? : string | null ;
+  private roomId : string | null | undefined;
   private client? : AgoraRTC.Client;
   private user : any;
   public room : Iroom | null | undefined;
@@ -27,7 +28,8 @@ export class RoomComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private router : Router,
     private auth : AngularFireAuth,
-    private db : AngularFireDatabase
+    private db : AngularFireDatabase,
+    private presenceService : PresenceService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +49,10 @@ export class RoomComponent implements OnInit {
         this.room = room;
         this.isHost = this.user.uid === this.room?.host;
         this.client?.setClientRole(this.isHost ? 'host' : 'audience');
+        this.presenceService.setPresenceOnline({
+          displayName: "",
+          key: this.user.uuid
+        }, this.roomId).pipe(take(1)).subscribe();
       }
     })
   }
