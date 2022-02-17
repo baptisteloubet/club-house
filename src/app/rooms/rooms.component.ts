@@ -38,20 +38,39 @@ export class RoomsComponent implements OnInit, OnDestroy {
           ...(c.payload.val() as any),
           key : c.payload.key
         };
-      })
-      ),
+      })),
       takeUntil(this.$destroy)
     );
     this.auth.authState.pipe(take(1)).subscribe({
       next:(user)=>{
         this.user = user?.uid;
       }
-    })
+    });
   }
 
   ngOnDestroy(): void {
-
+    this.$destroy.next(true);
+    this.$destroy.unsubscribe();
   }
+
+  public addRoom(nameInput : HTMLInputElement) : void{
+    if (nameInput.value.length) {
+      this.roomList.push({
+        name : nameInput.value,
+        host : this.user
+      }).then((resp )=>{
+        this.navigate(resp.key);
+      });
+    }
+    nameInput.value = '';
+    this.isRoomCreationShown = false;
+  }
+
+
+  public navigate(roomId? : string | null) : void {
+    this.route.navigate(['rooms/${roomId}'])
+  }
+
 
   logout(): void {
     this.auth.signOut().then(() => {
