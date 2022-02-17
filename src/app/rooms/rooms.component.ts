@@ -68,7 +68,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
 
   public navigate(roomId? : string | null) : void {
-    this.route.navigate(['rooms/${roomId}'])
+    this.route.navigate(['rooms/' + roomId])
   }
 
 

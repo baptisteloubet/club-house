@@ -4,7 +4,7 @@
     <h4>{{room.name}}</h4>
   </div>
 </section>
-<section class="create-rooms" [ngClass]="{'shown: isRoomCreationShown'}">
+<section class="create-rooms" [ngClass]="{'shown': isRoomCreationShown}">
   <button class="btn" (click)="isRoomCreationShown = !isRoomCreationShown">
     Créer une ROOM
   </button>
