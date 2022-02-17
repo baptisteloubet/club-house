@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "club-house-69100.appspot.com",
     messagingSenderId: "54293344322",
     appId: "1:54293344322:web:cd9aa6b935f81ec1fefddb"
-  }
+  },
+  agoraAppId: "e1fdfea2a5ed49caad2e9fb9262e1e80"
 };
 
 /*
